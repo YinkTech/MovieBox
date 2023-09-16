@@ -10,8 +10,9 @@ import { Link } from "react-router-dom";
 const SideBar = () => {
   return (
     <div
-      className="mt-1 sticky w-[200px] py-5  hidden md:block"
+      className="mt-1 w-[200px] py-5  hidden md:block"
       style={{
+        height: "-webkit-fill-available",
         position: "fixed",
         border: "2px solid #cccccc",
         borderRadius: "0px 35px 35px 0px",
