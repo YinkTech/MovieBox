@@ -41,13 +41,13 @@ export const Details = () => {
 
     getMovies();
   }, [id, accessKey, apiUrl]);
-  console.log(details);
+
 
   const [showIframe, setShowIframe] = useState(false);
 
   return (
     <div className=" w-[min-content] md:w-[auto]">
-      <div className="md:hidden">
+      <div className="md:hidden bg-[#555a]">
         <NavBar />
         <Link to="/">
           <BsFillBackspaceFill className="text-[#ca5555] mt-2 mx-3 text-3xl" />
@@ -58,7 +58,7 @@ export const Details = () => {
           <SideBar className="flex-1" />
           {Object.keys(details).length === 0 ? (
         <div className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
-          <div class="stage filter-contrast">
+          <div className="stage filter-contrast">
             <div class="dot-overtaking"></div>
           </div>
         </div>
@@ -101,12 +101,14 @@ export const Details = () => {
                   <p
                     className="font-semibold text-[#4f4f4f] flex p-0 m-0 items-center text-[12px]  md:text-[20px] "
                     style={{ whiteSpace: "nowrap" }}
+                    
                   >
-                    {details.title} <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    {details.release_date} <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
+                   <b data-testid="movie-title">{details.title}</b>  <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
+                   <span data-testid="movie-release-date"> {details.release_date}</span> <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    <span data-testid="movie-runtime" className="mx-1">
-                      {details.runtime}mins
+                    <span  className="mx-1">
+                      <span data-testid="movie-runtime"> {details.runtime}mins</span>
+
                     </span>
                   </p>{" "}
                   <div className="flex py-4 lg:py-0  items-center">
@@ -150,7 +152,7 @@ export const Details = () => {
               <div className="lg:flex my-4 lg:my-0 gap-9 items-center ">
                 <div style={{ flex: "2" }}>
                   <div>
-                    <p>{details.overview}</p>
+                    <p data-testid="movie-overview">{details.overview}</p>
                     <div
                       className="flex items-center my-3"
                       style={{ whiteSpace: "nowrap" }}

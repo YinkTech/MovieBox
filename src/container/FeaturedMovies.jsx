@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { IoChevronForward } from "react-icons/io5";
-import james from "./../assets/images/james.jpg";
 import imob from "./../assets/images/imob.png";
 import tomato from "./../assets/images/tomato.png";
 import { FaHeart } from "react-icons/fa";
@@ -42,7 +41,7 @@ const FeaturedMovies = () => {
   return (
     <div className=" my-8 md:container p-6 md:p-0 py-5 mx-auto">
       <div className="flex justify-between">
-        <h3 className="text-3xl font-bold">Featured Movies</h3>
+        <h3 className="md:text-3xl font-bold">Featured Movies</h3>
 
         <div
           className="flex items-center font-bold"
