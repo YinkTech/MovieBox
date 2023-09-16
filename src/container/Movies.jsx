@@ -44,10 +44,10 @@ const Movies = () => {
   return (
     <div className=" md:container p-1 mx-auto">
       <div className=" flex justify-between items-center">
-        <div className="flex items-center p-1">
+        <Link to={`/`} className="flex items-center p-1">
           <img src={logo} style={{ width: "33px" }} alt="logo" />
           <span className="text-black font-semibold mx-2">MovieBox</span>
-        </div>
+        </Link>
 
         <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
           <HiOutlineBars2

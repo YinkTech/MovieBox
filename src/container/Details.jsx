@@ -49,10 +49,10 @@ export const Details = () => {
     <div className=" md:w-[auto] overflow-hidden">
       <div className="md:hidden bg-[#555a]">
         <div className=" flex justify-between items-center">
-          <div className="flex items-center p-1">
+          <Link to={`/`} className="flex items-center p-1">
             <img src={logo} style={{ width: "33px" }} alt="logo" />
             <span className="text-black font-semibold mx-2">MovieBox</span>
-          </div>
+          </Link>
 
           <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
             <HiOutlineBars2
@@ -116,57 +116,55 @@ export const Details = () => {
                   >
                     <b data-testid="movie-title">{details.title}</b>{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    <span data-testid="movie-release-date">
+                    <span data-testid="movie-release-date  text-[10px]  md:text-[16px]">
                       {" "}
                       {details.release_date}
                     </span>{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    <span className="mx-1">
-                      <span data-testid="movie-runtime">
+                    <span className="mx-1  text-[10px]  md:text-[16px]" data-testid="movie-runtime">
+                      
                         {" "}
                         {details.runtime}mins
-                      </span>
                     </span>
                   </p>{" "}
                   <div className="flex justify-between items-center">
-                  <div className="flex py-4 lg:py-0  items-center">
-                    {details.genres.map((genre) => (
-                      <span
-                        key={genre.id}
-                        style={{
-                          border: "1px solid #faedf2",
-                          borderRadius: "20px",
-                          fontSize: "10px",
-                        }}
-                        className="mx-2 text-[#ca5555] px-3 py-1 font-bold "
-                      >
-                        {" "}
-                        {genre.name}{" "}
-                      </span>
-                    ))}
+                    <div className="flex py-4 lg:py-0  items-center">
+                      {details.genres.map((genre) => (
+                        <span
+                          key={genre.id}
+                          style={{
+                            border: "1px solid #faedf2",
+                            borderRadius: "20px",
+                            fontSize: "10px",
+                          }}
+                          className="mx-2 text-[#ca5555] px-3 py-1 font-bold "
+                        >
+                          {" "}
+                          {genre.name}{" "}
+                        </span>
+                      ))}
                     </div>
-                     <div className="flex-end flex items-center font-semibold text-[12px]  md:text-[20px]">
-                  <AiFillStar className="text-[#fed135] mx-3" />
-                  {details && details.vote_average !== undefined && (
-                    <span className="text-[#e8e8e8]">
-                      {details.vote_average.toFixed(1)}
-                    </span>
-                  )}
-                  <span
-                    className="mx-2"
-                    style={{
-                      color: "#6e6e6e",
-                    }}
-                  >
-                    |
-                  </span>
-                  <span style={{ color: "#6e6e6e" }}>350k</span>
-                </div>
+                    <div className="flex-end flex items-center font-semibold text-[12px]  md:text-[20px]">
+                      <AiFillStar className="text-[#fed135] mx-3" />
+                      {details && details.vote_average !== undefined && (
+                        <span className="text-[#e8e8e8]">
+                          {details.vote_average.toFixed(1)}
+                        </span>
+                      )}
+                      <span
+                        className="mx-2"
+                        style={{
+                          color: "#6e6e6e",
+                        }}
+                      >
+                        |
+                      </span>
+                      <span style={{ color: "#6e6e6e" }}>350k</span>
+                    </div>
                   </div>
                 </div>
 
-                
                 <div className="hidden lg:flex items-center font-semibold text-[12px]  md:text-[20px]">
                   <AiFillStar className="text-[#fed135] mx-3" />
                   {details && details.vote_average !== undefined && (
@@ -188,7 +186,7 @@ export const Details = () => {
 
               <div className="lg:flex my-4 lg:my-0 gap-9 items-center ">
                 <div style={{ flex: "2" }}>
-                  <div>
+                  <div className=" text-[10px]  md:text-[16px]">
                     <p data-testid="movie-overview">{details.overview}</p>
                     <div
                       className="flex items-center my-3"
@@ -223,7 +221,7 @@ export const Details = () => {
                         style={{ whiteSpace: "nowrap" }}
                       >
                         <div
-                          className="px-3 py-1 text-[13px]  md:text-[16px] text-white bg-[#be113c]"
+                          className="px-3 py-1 text-[10px]  md:text-[16px] text-white bg-[#be113c]"
                           style={{
                             border: "1px solid #be113c",
                             borderRadius: "10px",
@@ -231,7 +229,7 @@ export const Details = () => {
                         >
                           Top rated movie #65
                         </div>
-                        <div className="font-semibold mx-3  text-[13px]  md:text-[16px]">
+                        <div className="font-semibold mx-3  text-[10px]  md:text-[16px]">
                           {" "}
                           Awards 9 nominaitons{" "}
                         </div>
