@@ -1,0 +1,19 @@
+input::placeholder {
+  color: #fff;
+}
+
+input:focus {
+  outline: none;
+}
+
+.details-header {
+  
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 19px;
+  border: 1px solid #f0c8d1;
+  width: -webkit-fill-available;
+  height: 450px;
+}
+

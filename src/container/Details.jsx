@@ -1,0 +1,249 @@
+import React, { useEffect, useState } from "react";
+import SideBar from "../components/SideBar";
+import { BsFillPlayFill, BsFillBackspaceFill, BsDot } from "react-icons/bs";
+import { AiFillStar } from "react-icons/ai";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import tag from "./../assets/images/TwoTickets.png";
+import list from "./../assets/images/List.png";
+import list2 from "./../assets/images/List2.png";
+import Rectangle from "./../assets/images/Rectangle.png";
+import { Center } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+export const Details = () => {
+  const { id } = useParams();
+  const [details, setMovies] = useState([]);
+  const [error, setError] = useState("");
+  const apiUrl = import.meta.env.VITE_MOVIE_DETAILS;
+  const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getMovies = async () => {
+      try {
+        if (id !== null) {
+          const response = await fetch(`${apiUrl}${id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessKey}`,
+            },
+          });
+          const data = await response.json();
+          setMovies(data);
+        }
+      } catch (err) {
+        console.log(err);
+        setError("Error getting movie details :(");
+      }
+    };
+
+    getMovies();
+  }, [id, accessKey, apiUrl]);
+  console.log(details);
+
+  const [showIframe, setShowIframe] = useState(false);
+
+  return (
+    <div>
+      <Link to="/" className="lg:hidden">
+        <BsFillBackspaceFill className="text-[#ca5555] text-3xl p-1" />
+      </Link>
+      {error ? (
+        <div className="flex justify-center items-center">
+          <p className="text-buttonred m-auto text-2xl max-[280]:text-base md:text-[36px]">
+            {error}
+          </p>
+        </div>
+      ) : (
+        <div className="flex bg-[fff]">
+          <SideBar className="flex-1" />
+          <div className=" p-4 md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
+            {showIframe ? (
+              <iframe
+                src={details.homepage}
+                className="details-header "
+                title="Iframe Example"
+              ></iframe>
+            ) : (
+              <div
+                className="details-header  text-center bg-no-repeat flex justify-center items-center"
+                onClick={() => setShowIframe(true)}
+                style={{
+                  background: `url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
+                  backgroundColor: 'lightgray',
+                  cursor: "pointer",
+                }}
+              >
+                <div>
+                  <div
+                    className="bg-[#ffffffa2] w-14 h-13 p-3 flex items-center mx-auto"
+                    style={{ borderRadius: "50%" }}
+                  >
+                    <BsFillPlayFill
+                      className="text-[#fff] "
+                      style={{ fontSize: "30px" }}
+                    />
+                  </div>
+                  <h6 className="font-semibold text-white">Watch Trailer</h6>
+                </div>
+              </div>
+            )}
+
+            <div className="my-5 md:mx-3">
+              <div className="flex text-center mx-auto items-center justify-between">
+                <div className="lg:flex items-center">
+                  <p
+                    className="font-semibold text-[#4f4f4f] flex p-0 m-0 items-center text-[12px]  md:text-[20px] "
+                    style={{ whiteSpace: "nowrap" }}
+                  >
+                    {details.title} <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
+                    2022 <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
+                    <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
+                    <span data-testid="movie-runtime" className="mx-1">
+                      {details.runtime}mins
+                    </span>
+                  </p>{" "}
+                  <div className="flex py-4 lg:py-0  items-center">
+                    <span
+                      style={{
+                        border: "1px solid #faedf2",
+                        borderRadius: "20px",
+                        fontSize: "10px",
+                      }}
+                      className="mx-5 text-[#ca5555] px-3 py-1 font-bold "
+                    >
+                      {" "}
+                      Action{" "}
+                    </span>
+                    <span
+                      style={{
+                        border: "1px solid #faedf2",
+                        borderRadius: "20px",
+                        fontSize: "10px",
+                      }}
+                      className="mx-5 text-[#ca5555] px-3 py-1 font-bold "
+                    >
+                      {" "}
+                      Drama{" "}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center font-semibold text-[12px]  md:text-[20px]">
+                  <AiFillStar className="text-[#fed135] mx-3" />
+                  {details && details.vote_average !== undefined && (
+                    <span className="text-[#e8e8e8]">
+                      {details.vote_average.toFixed(1)}
+                    </span>
+                  )}
+                  <span
+                    className="mx-2"
+                    style={{
+                      color: "#6e6e6e",
+                    }}
+                  >
+                    |
+                  </span>
+                  <span style={{ color: "#6e6e6e" }}>350k</span>
+                </div>
+              </div>
+
+              <div className="lg:flex my-4 lg:my-0 gap-9 items-center ">
+                <div style={{ flex: "2" }}>
+                  <div>
+                    <p>{details.overview}</p>
+                    <div
+                      className="flex items-center my-3"
+                      style={{ whiteSpace: "nowrap" }}
+                    >
+                      <label> Directors : </label>
+                      <span className="text-[#c11f46] font-semibold mx-2">
+                        Joseph
+                      </span>
+                    </div>
+                    <div className="flex items-center my-3">
+                      <label style={{ whiteSpace: "nowrap" }}>
+                        {" "}
+                        Writers :{" "}
+                      </label>
+                      <span className="text-[#c11f46] font-semibold mx-2">
+                        Jim Cash, Jack Epps Jr, Peter Craig
+                      </span>
+                    </div>
+                    <div className="flex items-center my-3">
+                      <label style={{ whiteSpace: "nowrap" }}> Stars : </label>
+                      <span className="text-[#c11f46] font-semibold mx-2">
+                        Tom Cruise, Jennifer Connelly, Miles Teller
+                      </span>
+                    </div>
+                    <div
+                      className="flex items-center justify-between"
+                      style={{ border: "1px solid #555", borderRadius: "10px" }}
+                    >
+                      <div
+                        className="flex items-center"
+                        style={{ whiteSpace: "nowrap" }}
+                      >
+                        <div
+                          className="px-3 py-1 text-white bg-[#be113c]"
+                          style={{
+                            border: "1px solid #be113c",
+                            borderRadius: "10px",
+                          }}
+                        >
+                          Top rated movie #65
+                        </div>
+                        <div className="font-semibold mx-3">
+                          {" "}
+                          Awards 9 nominaitons{" "}
+                        </div>
+                      </div>
+                      <div>
+                        <RiArrowDropDownLine className="text-2xl" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <div className="flex items-center justify-center bg-[#be113c] text-[#fff] p-2 rounded-lg font-semibold mt-5 lg-mt-5">
+                      {" "}
+                      <img src={tag} alt="tag" className="mx-2" /> See Showtimes{" "}
+                    </div>
+                    <div
+                      className="flex items-center justify-center bg-[#f8e8eb] text-[#000] p-2 rounded-lg font-semibold my-3"
+                      style={{ border: "1px solid #be113c" }}
+                    >
+                      {" "}
+                      <img src={list} alt="tag" className="mx-2" /> More Watch
+                      options{" "}
+                    </div>
+                    <div
+                      style={{
+                        background: `url(${Rectangle})`,
+                        backgroundPosition: Center,
+                        backgroundSize: "100% 100%",
+                      }}
+                      className=" pt-52 lg:pt-40 mt-9 lg:mt-5"
+                    >
+                      <div
+                        style={{
+                          whiteSpace: "nowrap",
+                          borderRadius: "10px 10px 0px 0px",
+                        }}
+                        className="flex items-center justify-center bg-[#000000ba] text-[#fff] text-[13px] p-2"
+                      >
+                        <img src={list2} alt="list2" className="mx-2" />
+                        The Best Movies and Shows in September
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
