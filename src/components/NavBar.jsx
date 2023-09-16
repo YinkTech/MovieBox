@@ -6,7 +6,7 @@ import { HiOutlineBars2 } from "react-icons/hi2";
 
 export const NavBar = () => {
   return (
-    <Box className="sm:container py-3 flex justify-between mx-auto p-1 items-center mb-20">
+    <Box className="sm:container flex justify-between mx-auto p-1 items-center">
       <div
         className=" flex items-center p-1"
       >

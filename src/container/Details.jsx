@@ -10,6 +10,7 @@ import Rectangle from "./../assets/images/Rectangle.png";
 import { Center } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
+import { NavBar } from "../components/NavBar";
 
 export const Details = () => {
   const { id } = useParams();
@@ -45,19 +46,23 @@ export const Details = () => {
   const [showIframe, setShowIframe] = useState(false);
 
   return (
-    <div>
-      <Link to="/" className="lg:hidden">
-        <BsFillBackspaceFill className="text-[#ca5555] text-3xl p-1" />
-      </Link>
-      {error ? (
-        <div className="flex justify-center items-center">
-          <p className="text-buttonred m-auto text-2xl max-[280]:text-base md:text-[36px]">
-            {error}
-          </p>
-        </div>
-      ) : (
+    <div className=" w-[min-content] md:w-[auto]">
+      <div className="md:hidden">
+        <NavBar />
+        <Link to="/">
+          <BsFillBackspaceFill className="text-[#ca5555] mt-2 mx-3 text-3xl" />
+        </Link>
+      </div>
+      
         <div className="flex bg-[fff]">
           <SideBar className="flex-1" />
+          {Object.keys(details).length === 0 ? (
+        <div className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
+          <div class="stage filter-contrast">
+            <div class="dot-overtaking"></div>
+          </div>
+        </div>
+      ) : (
           <div className=" p-4 md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
             {showIframe ? (
               <iframe
@@ -71,7 +76,7 @@ export const Details = () => {
                 onClick={() => setShowIframe(true)}
                 style={{
                   background: `url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
-                  backgroundColor: 'lightgray',
+                  backgroundColor: "lightgray",
                   cursor: "pointer",
                 }}
               >
@@ -98,35 +103,29 @@ export const Details = () => {
                     style={{ whiteSpace: "nowrap" }}
                   >
                     {details.title} <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    2022 <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
+                    {details.release_date} <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
                     <span data-testid="movie-runtime" className="mx-1">
                       {details.runtime}mins
                     </span>
                   </p>{" "}
                   <div className="flex py-4 lg:py-0  items-center">
+                 { details.genres.map((genre) => (
+
                     <span
+                    key={genre.id}
                       style={{
                         border: "1px solid #faedf2",
                         borderRadius: "20px",
                         fontSize: "10px",
                       }}
-                      className="mx-5 text-[#ca5555] px-3 py-1 font-bold "
+                      className="mx-2 text-[#ca5555] px-3 py-1 font-bold "
                     >
                       {" "}
-                      Action{" "}
+                      {genre.name}{" "}
                     </span>
-                    <span
-                      style={{
-                        border: "1px solid #faedf2",
-                        borderRadius: "20px",
-                        fontSize: "10px",
-                      }}
-                      className="mx-5 text-[#ca5555] px-3 py-1 font-bold "
-                    >
-                      {" "}
-                      Drama{" "}
-                    </span>
+                 ))}
+
                   </div>
                 </div>
                 <div className="flex items-center font-semibold text-[12px]  md:text-[20px]">
@@ -242,8 +241,8 @@ export const Details = () => {
               </div>
             </div>
           </div>
-        </div>
       )}
+        </div>
     </div>
   );
 };
