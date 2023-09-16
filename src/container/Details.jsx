@@ -72,17 +72,17 @@ export const Details = () => {
               ></iframe>
             ) : (
               <div
-                className="details-header  text-center bg-no-repeat flex justify-center items-center"
-                onClick={() => setShowIframe(true)}
-                style={{
-                  background: `url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
-                  backgroundColor: "lightgray",
-                  cursor: "pointer",
-                }}
+              onClick={() => setShowIframe(true)}
+              className="details-header aspect-h-1 flex items-center justify-center mx-auto aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
+                    style={{
+                      background: `url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
+                      backgroundPosition: "center",
+                      backgroundSize: "100% 100%",
+                    }}
               >
                 <div>
                   <div
-                    className="bg-[#ffffffa2] w-14 h-13 p-3 flex items-center mx-auto"
+                    className="bg-[#ffffffa2] w-14 h-13 p-3 flex items-center  mx-auto"
                     style={{ borderRadius: "50%" }}
                   >
                     <BsFillPlayFill
