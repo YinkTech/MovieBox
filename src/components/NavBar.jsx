@@ -141,7 +141,6 @@ export const NavBar = () => {
           <input
             id="search"
             aria-label="Search"
-            autoFocus
             aria-haspopup="listbox"
             role="combobox"
             style={{ background: "inherit" }}
