@@ -9,7 +9,7 @@ import { BsFillPlayCircleFill } from "react-icons/bs";
 const Header = () => {
   return (
     <div
-      className="h-[400px] md:h-[500px]"
+      className="h-[400px] px-1 md:h-[500px]"
       style={{
         backgroundImage: `linear-gradient(to bottom, #00000064, #08060688), url(${john})`,
         backgroundPosition: "center",
@@ -57,7 +57,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className="hidden md:block">
           <span className="flex items-center gap-1 text-gray-400">
             <HiOutlineMinus className=" font-extrabold opacity-0" /> 1
           </span>

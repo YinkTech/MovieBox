@@ -96,31 +96,33 @@ export const NavBar = () => {
 
   return (
     <div className="bg-[inherit]">
-      <Box className="sm:container flex justify-between mx-auto p-1 items-center">
+      <Box className="md:container flex justify-between mx-auto p-1 items-center">
         {/* Logo and brand */}
         <div className="flex items-center p-1">
           <img src={logo} style={{ width: "33px" }} alt="logo" />
           <span className="text-white font-semibold mx-2">MovieBox</span>
         </div>
 
-        {/* Search input */}
         <div
           onClick={togglePopup}
-          className="flex items-center cursor-pointer text-white p-3 h-[40px]"
+          className="hidden md:flex items-center cursor-pointer text-white p-3 h-[40px]"
           style={{ border: "3px solid #fff", borderRadius: "10px" }}
         >
           <span
             style={{ background: "inherit" }}
-            className="hidden sm:block lg:w-[500px] md:w-[460px] sm:w-[180px] w-[100px]"
+            className=" lg:w-[500px] md:w-[460px] sm:w-[180px] w-[100px]"
           >
             what do you want to watch
           </span>
           <SearchIcon />
         </div>
 
-        {/* Sign-in and menu */}
         <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
-          <span className="font-semibold">Sign in</span>
+          <span className="font-semibold hidden md:flex">Sign in</span>
+          <div className="block md:hidden mx-4" onClick={togglePopup}>
+            <SearchIcon />
+          </div>
+
           <HiOutlineBars2
             className="bg-[#be113cd1] font-bolder"
             style={{ padding: "4px", borderRadius: "50%", fontSize: "24px" }}
@@ -179,12 +181,14 @@ export const NavBar = () => {
                 to={`/details/${item.id}`}
               >
                 <img
-                  className=" w-14 md:w-28"
+                  className=" w-14 md:w-28 hidden md:block"
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                 />
                 <div>
                   <span className="p-3 block">{item.title}</span>
-                  <span className="p-3 text-xl">{item.original_title}</span>
+                  <span className="hidden md:block p-3 text-xl">
+                    {item.original_title}
+                  </span>
                 </div>
               </Link>
             ))

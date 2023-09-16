@@ -8,9 +8,9 @@ import list from "./../assets/images/List.png";
 import list2 from "./../assets/images/List2.png";
 import Rectangle from "./../assets/images/Rectangle.png";
 import { Center } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
-import { NavBar } from "../components/NavBar";
+import { Link, useParams } from "react-router-dom";
+import logo from "./../assets/images/tv.png";
+import { HiOutlineBars2 } from "react-icons/hi2";
 
 export const Details = () => {
   const { id } = useParams();
@@ -18,7 +18,6 @@ export const Details = () => {
   const [error, setError] = useState("");
   const apiUrl = import.meta.env.VITE_MOVIE_DETAILS;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getMovies = async () => {
@@ -42,43 +41,56 @@ export const Details = () => {
     getMovies();
   }, [id, accessKey, apiUrl]);
 
-
   const [showIframe, setShowIframe] = useState(false);
 
+  console.log(error);
+
   return (
-    <div className=" w-[min-content] md:w-[auto]">
+    <div className=" w-[min-content] md:w-[auto] overflow-hidden">
       <div className="md:hidden bg-[#555a]">
-        <NavBar />
+      <div className=" flex justify-between items-center">
+        <div className="flex items-center p-1">
+          <img src={logo} style={{ width: "33px" }} alt="logo" />
+          <span className="text-black font-semibold mx-2">MovieBox</span>
+        </div>
+
+        <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
+          <HiOutlineBars2
+            className="bg-[#be113cd1] font-bolder"
+            style={{ padding: "4px", borderRadius: "50%", fontSize: "24px" }}
+          />
+        </div>
+      </div>
         <Link to="/">
           <BsFillBackspaceFill className="text-[#ca5555] mt-2 mx-3 text-3xl" />
         </Link>
       </div>
-      
-        <div className="flex bg-[fff]">
-          <SideBar className="flex-1" />
-          {Object.keys(details).length === 0 ? (
-        <div className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
-          <div className="stage filter-contrast">
-            <div class="dot-overtaking"></div>
+
+      <div className="flex bg-[fff]">
+        <SideBar className="flex-1" />
+        {Object.keys(details).length === 0 ? (
+          <div className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
+            <div className="stage filter-contrast">
+              <div class="dot-overtaking"></div>
+            </div>
           </div>
-        </div>
-      ) : (
+        ) : (
           <div className=" p-4 md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
             {showIframe ? (
               <iframe
                 src={details.homepage}
-                className="details-header "
+                className="details-header  md:h-[450px] h-64"
                 title="Iframe Example"
               ></iframe>
             ) : (
               <div
-              onClick={() => setShowIframe(true)}
-              className="details-header aspect-h-1 flex items-center justify-center mx-auto aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
-                    style={{
-                      background: `url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
-                      backgroundPosition: "center",
-                      backgroundSize: "100% 100%",
-                    }}
+                onClick={() => setShowIframe(true)}
+                className="details-header aspect-h-1 flex items-center justify-center mx-auto aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer md:h-[450px] h-64"
+                style={{
+                  background: `url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "100% 100%",
+                }}
               >
                 <div>
                   <div
@@ -101,33 +113,37 @@ export const Details = () => {
                   <p
                     className="font-semibold text-[#4f4f4f] flex p-0 m-0 items-center text-[12px]  md:text-[20px] "
                     style={{ whiteSpace: "nowrap" }}
-                    
                   >
-                   <b data-testid="movie-title">{details.title}</b>  <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                   <span data-testid="movie-release-date"> {details.release_date}</span> <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
+                    <b data-testid="movie-title">{details.title}</b>{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    <span  className="mx-1">
-                      <span data-testid="movie-runtime"> {details.runtime}mins</span>
-
+                    <span data-testid="movie-release-date">
+                      {" "}
+                      {details.release_date}
+                    </span>{" "}
+                    <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
+                    <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
+                    <span className="mx-1">
+                      <span data-testid="movie-runtime">
+                        {" "}
+                        {details.runtime}mins
+                      </span>
                     </span>
                   </p>{" "}
                   <div className="flex py-4 lg:py-0  items-center">
-                 { details.genres.map((genre) => (
-
-                    <span
-                    key={genre.id}
-                      style={{
-                        border: "1px solid #faedf2",
-                        borderRadius: "20px",
-                        fontSize: "10px",
-                      }}
-                      className="mx-2 text-[#ca5555] px-3 py-1 font-bold "
-                    >
-                      {" "}
-                      {genre.name}{" "}
-                    </span>
-                 ))}
-
+                    {details.genres.map((genre) => (
+                      <span
+                        key={genre.id}
+                        style={{
+                          border: "1px solid #faedf2",
+                          borderRadius: "20px",
+                          fontSize: "10px",
+                        }}
+                        className="mx-2 text-[#ca5555] px-3 py-1 font-bold "
+                      >
+                        {" "}
+                        {genre.name}{" "}
+                      </span>
+                    ))}
                   </div>
                 </div>
                 <div className="flex items-center font-semibold text-[12px]  md:text-[20px]">
@@ -243,8 +259,8 @@ export const Details = () => {
               </div>
             </div>
           </div>
-      )}
-        </div>
+        )}
+      </div>
     </div>
   );
 };

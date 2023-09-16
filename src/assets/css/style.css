@@ -11,7 +11,6 @@ input:focus {
   border-radius: 19px;
   border: 1px solid #f0c8d1;
   width: -webkit-fill-available;
-  height: 450px;
 }
 
 .stage {

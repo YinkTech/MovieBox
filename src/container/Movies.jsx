@@ -4,8 +4,11 @@ import imob from "./../assets/images/imob.png";
 import tomato from "./../assets/images/tomato.png";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import logo from "./../assets/images/tv.png";
+import { HiOutlineBars2 } from "react-icons/hi2";
+import Footer from "../components/Footer";
 
-const FeaturedMovies = () => {
+const Movies = () => {
   const [like, liked] = useState(false);
   const setLike = () => {
     liked(!like);
@@ -13,7 +16,7 @@ const FeaturedMovies = () => {
 
   const [movie, setMovie] = useState([]);
   const [error, setError] = useState("");
-  const apiAccess = import.meta.env.VITE_API_URL;
+  const apiAccess = import.meta.env.VITE_API_URL_MORE;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
   useEffect(() => {
     const getTopRated = async () => {
@@ -39,28 +42,27 @@ const FeaturedMovies = () => {
   }, [apiAccess, accessKey]);
 
   return (
-    <div className=" my-8 md:container p-1 md:p-6 py-5 mx-auto">
-      <div className="flex justify-between">
-        <h3 className="md:text-3xl font-bold">Featured Movies</h3>
+    <div className=" md:container p-1 mx-auto">
+      <div className=" flex justify-between items-center">
+        <div className="flex items-center p-1">
+          <img src={logo} style={{ width: "33px" }} alt="logo" />
+          <span className="text-black font-semibold mx-2">MovieBox</span>
+        </div>
 
-        <Link
-        to='./movies'
-          className="flex items-center font-bold"
-          style={{ color: "#cf4e6c" }}
-        >
-          <span style={{ fontSize: "13px" }} className="p-0">
-            See more
-          </span>
-          <IoChevronForward className="p-0 mt-1 m-0" />
-        </Link>
+        <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
+          <HiOutlineBars2
+            className="bg-[#be113cd1] font-bolder"
+            style={{ padding: "4px", borderRadius: "50%", fontSize: "24px" }}
+          />
+        </div>
       </div>
       {error ? (
         <p className="text-buttonred text-2xl max-[280]:text-base md:text-[36px]">
           {error}
         </p>
       ) : (
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-          {movie.slice(0, 10).map((sets) => {
+        <div className="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+          {movie.map((sets) => {
             return (
               <Link to={`/details/${sets.id}`}>
                 <div
@@ -155,8 +157,10 @@ const FeaturedMovies = () => {
           })}
         </div>
       )}
+      <div className="my-5"></div>
+      <Footer />
     </div>
   );
 };
 
-export default FeaturedMovies;
+export default Movies;
