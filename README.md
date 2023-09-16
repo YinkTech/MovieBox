@@ -55,7 +55,7 @@ To get a local copy up and running, follow these simple steps:
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://yinktech.github.io/Schools_search/index.html).
+Feel free to check the [issues page](https://github.com/YinkTech/MovieBox/issues).
 
 ## Show your support
 
