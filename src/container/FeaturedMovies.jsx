@@ -39,7 +39,7 @@ const FeaturedMovies = () => {
   }, [apiAccess, accessKey]);
 
   return (
-    <div className=" my-8 md:container p-2 md:p-6 py-5 mx-auto">
+    <div className=" my-8 md:container p-6 md:p-6 py-5 mx-auto">
       <div className="flex justify-between">
         <h3 className="md:text-3xl font-bold">Featured Movies</h3>
 

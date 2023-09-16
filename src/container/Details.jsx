@@ -46,27 +46,27 @@ export const Details = () => {
   console.log(error);
 
   return (
-    <div className=" w-[min-content] md:w-[auto] overflow-hidden">
+    <div className=" md:w-[auto] overflow-hidden">
       <div className="md:hidden bg-[#555a]">
-      <div className=" flex justify-between items-center">
-        <div className="flex items-center p-1">
-          <img src={logo} style={{ width: "33px" }} alt="logo" />
-          <span className="text-black font-semibold mx-2">MovieBox</span>
-        </div>
+        <div className=" flex justify-between items-center">
+          <div className="flex items-center p-1">
+            <img src={logo} style={{ width: "33px" }} alt="logo" />
+            <span className="text-black font-semibold mx-2">MovieBox</span>
+          </div>
 
-        <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
-          <HiOutlineBars2
-            className="bg-[#be113cd1] font-bolder"
-            style={{ padding: "4px", borderRadius: "50%", fontSize: "24px" }}
-          />
+          <div className="flex items-center text-white p-1 sm:p-3 gap-1 sm:gap-2">
+            <HiOutlineBars2
+              className="bg-[#be113cd1] font-bolder"
+              style={{ padding: "4px", borderRadius: "50%", fontSize: "24px" }}
+            />
+          </div>
         </div>
-      </div>
         <Link to="/">
           <BsFillBackspaceFill className="text-[#ca5555] mt-2 mx-3 text-3xl" />
         </Link>
       </div>
 
-      <div className="flex bg-[fff]">
+      <div className="flex ">
         <SideBar className="flex-1" />
         {Object.keys(details).length === 0 ? (
           <div className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
@@ -129,6 +129,7 @@ export const Details = () => {
                       </span>
                     </span>
                   </p>{" "}
+                  <div className="flex justify-between items-center">
                   <div className="flex py-4 lg:py-0  items-center">
                     {details.genres.map((genre) => (
                       <span
@@ -144,9 +145,29 @@ export const Details = () => {
                         {genre.name}{" "}
                       </span>
                     ))}
+                    </div>
+                     <div className="flex-end flex items-center font-semibold text-[12px]  md:text-[20px]">
+                  <AiFillStar className="text-[#fed135] mx-3" />
+                  {details && details.vote_average !== undefined && (
+                    <span className="text-[#e8e8e8]">
+                      {details.vote_average.toFixed(1)}
+                    </span>
+                  )}
+                  <span
+                    className="mx-2"
+                    style={{
+                      color: "#6e6e6e",
+                    }}
+                  >
+                    |
+                  </span>
+                  <span style={{ color: "#6e6e6e" }}>350k</span>
+                </div>
                   </div>
                 </div>
-                <div className="flex items-center font-semibold text-[12px]  md:text-[20px]">
+
+                
+                <div className="hidden lg:flex items-center font-semibold text-[12px]  md:text-[20px]">
                   <AiFillStar className="text-[#fed135] mx-3" />
                   {details && details.vote_average !== undefined && (
                     <span className="text-[#e8e8e8]">
@@ -202,7 +223,7 @@ export const Details = () => {
                         style={{ whiteSpace: "nowrap" }}
                       >
                         <div
-                          className="px-3 py-1 text-white bg-[#be113c]"
+                          className="px-3 py-1 text-[13px]  md:text-[16px] text-white bg-[#be113c]"
                           style={{
                             border: "1px solid #be113c",
                             borderRadius: "10px",
@@ -210,7 +231,7 @@ export const Details = () => {
                         >
                           Top rated movie #65
                         </div>
-                        <div className="font-semibold mx-3">
+                        <div className="font-semibold mx-3  text-[13px]  md:text-[16px]">
                           {" "}
                           Awards 9 nominaitons{" "}
                         </div>
