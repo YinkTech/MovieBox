@@ -72,7 +72,7 @@ const FeaturedMovies = () => {
                   style={{ borderRadius: "5px" }}
                 >
                   <div
-                    data-testid:movie-poster
+                    data-testid="movie-poster"
                     className="aspect-h-1  aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
                     style={{
                       background: `url(https://image.tmdb.org/t/p/original/${sets.poster_path})`,
@@ -101,7 +101,7 @@ const FeaturedMovies = () => {
                     </div>
                   </div>
                   <span
-                    data-testid:movie-release-date
+                    data-testid="movie-release-date"
                     className="mb-2 font-bold"
                     style={{ color: "#b0b4bf", fontSize: "11px" }}
                   >
