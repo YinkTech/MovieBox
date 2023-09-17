@@ -112,7 +112,7 @@ export const Details = () => {
               <div className="flex text-center mx-auto items-center justify-between">
                 <div className="lg:flex items-center">
                   <div
-                    className="font-semibold text-[#4f4f4f] lg:flex p-0 m-0 items-center "
+                    className="font-semibold text-[#4f4f4f] xl:flex p-0 m-0 items-center "
                     style={{ whiteSpace: "nowrap" }}
                   >
                     <div className="flex items-center">
