@@ -111,24 +111,32 @@ export const Details = () => {
             <div className="my-5 md:mx-3">
               <div className="flex text-center mx-auto items-center justify-between">
                 <div className="lg:flex items-center">
-                  <p
-                    className="font-semibold text-[#4f4f4f] flex p-0 m-0 items-center text-[12px]  md:text-[20px] "
+                  <div
+                    className="font-semibold text-[#4f4f4f] lg:flex p-0 m-0 items-center "
                     style={{ whiteSpace: "nowrap" }}
                   >
-                    <b data-testid="movie-title">{details.title}</b>{" "}
-                    <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    <span data-testid="movie-release-date  text-[10px]  md:text-[16px]">
-                      {" "}
-                      {formatToUTC(details.release_date)}
-                    </span>{" "}
-                    <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
-                    <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
-                    <span className="mx-1  text-[10px]  md:text-[16px]" data-testid="movie-runtime">
-                      
+                    <div className="flex items-center">
+                      <b data-testid="movie-title block text-[14px]  md:text-[20px]">
+                        {details.title}
+                      </b>{" "}
+                      <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
+                    </div>
+                    <div className="flex items-center  text-[10px]  md:text-[14px]">
+                      <span data-testid="movie-release-date ">
+                        {" "}
+                        {formatToUTC(details.release_date)}
+                      </span>{" "}
+                      <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
+                      <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
+                      <span
+                        className="mx-1  text-[10px]  md:text-[16px]"
+                        data-testid="movie-runtime"
+                      >
                         {" "}
                         {details.runtime}mins
-                    </span>
-                  </p>{" "}
+                      </span>
+                    </div>
+                  </div>{" "}
                   <div className="flex justify-between items-center">
                     <div className="flex py-4 lg:py-0  items-center">
                       {details.genres.map((genre) => (
@@ -146,7 +154,7 @@ export const Details = () => {
                         </span>
                       ))}
                     </div>
-                    <div className="flex-end flex items-center font-semibold text-[12px]  md:text-[20px]">
+                    <div className="flex-end flex lg:hidden items-center font-semibold text-[12px]  md:text-[20px]">
                       <AiFillStar className="text-[#fed135] mx-3" />
                       {details && details.vote_average !== undefined && (
                         <span className="text-[#e8e8e8]">

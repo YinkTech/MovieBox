@@ -64,7 +64,7 @@ const Movies = () => {
         <div className="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
           {movie.map((sets) => {
             return (
-              <Link to={`/details/${sets.id}`}>
+              <Link to={`/movies/${sets.id}`}>
                 <div
                   data-testid:movie-card
                   key={sets.id}
