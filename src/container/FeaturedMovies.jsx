@@ -4,6 +4,7 @@ import imob from "./../assets/images/imob.png";
 import tomato from "./../assets/images/tomato.png";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { formatToUTC } from "../utc/UtcFormat";
 
 const FeaturedMovies = () => {
   const [like, liked] = useState(false);
@@ -42,7 +43,7 @@ const FeaturedMovies = () => {
     <div className=" my-8 md:container p-6 md:p-6 py-5 mx-auto">
       <div className="flex justify-between">
         <h3 className="md:text-3xl font-bold">Featured Movies</h3>
-
+    
         <Link
         to='./movies'
           className="flex items-center font-bold"
@@ -64,15 +65,15 @@ const FeaturedMovies = () => {
             return (
               <Link to={`/details/${sets.id}`}>
                 <div
-                  data-testid:movie-card
+                  data-testid='movie-card'
                   key={sets.id}
                   id={sets.id}
-                  className="group relative bg-white hover:opacity-80 transition-all"
+                  className="group relative bg-white featuredCard"
                   style={{ borderRadius: "5px" }}
                 >
                   <div
                     data-testid:movie-poster
-                    className="aspect-h-1 aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
+                    className="aspect-h-1  aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
                     style={{
                       background: `url(https://image.tmdb.org/t/p/original/${sets.poster_path})`,
                       backgroundPosition: "center",
@@ -104,12 +105,12 @@ const FeaturedMovies = () => {
                     className="mb-2 font-bold"
                     style={{ color: "#b0b4bf", fontSize: "11px" }}
                   >
-                    {sets.release_date}
+                    {formatToUTC(sets.release_date)}
                   </span>
                   <div className="block">
                     <div>
                       <h3 className="my-2 text-sm text-[#111828]">
-                        <b className="text-xl" data-testid:movie-title>
+                        <b className="text-xl" data-testid="movie-title">
                           {sets.original_title}
                         </b>
                       </h3>

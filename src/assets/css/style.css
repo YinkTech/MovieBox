@@ -7,6 +7,13 @@ input:focus {
   outline: none;
 }
 
+.featuredCard:hover {
+  transition: .2s all ease-in-out;
+}
+.featuredCard:hover {
+  transform: scale(1.1);
+}
+
 .details-header {
   border-radius: 19px;
   border: 1px solid #f0c8d1;

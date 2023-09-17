@@ -11,6 +11,7 @@ import { Center } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import logo from "./../assets/images/tv.png";
 import { HiOutlineBars2 } from "react-icons/hi2";
+import { formatToUTC } from "../utc/UtcFormat";
 
 export const Details = () => {
   const { id } = useParams();
@@ -118,7 +119,7 @@ export const Details = () => {
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
                     <span data-testid="movie-release-date  text-[10px]  md:text-[16px]">
                       {" "}
-                      {details.release_date}
+                      {formatToUTC(details.release_date)}
                     </span>{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" /> PG-13{" "}
                     <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
