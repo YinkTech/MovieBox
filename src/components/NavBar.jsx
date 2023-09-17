@@ -178,7 +178,7 @@ export const NavBar = () => {
                 key={item.id}
                 className="p-4 flex items-center"
                 style={{ border: "1px solid #f0c8d1" }}
-                to={`/details/${item.id}`}
+                to={`/movies/${item.id}`}
               >
                 <img
                   className=" w-14 md:w-28 hidden md:block"

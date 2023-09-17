@@ -45,7 +45,8 @@ const FeaturedMovies = () => {
         <h3 className="md:text-3xl font-bold">Featured Movies</h3>
     
         <Link
-        to='./movies'
+        to='./seemore'
+        to='./seemore'
           className="flex items-center font-bold"
           style={{ color: "#cf4e6c" }}
         >
@@ -63,7 +64,7 @@ const FeaturedMovies = () => {
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
           {movie.slice(0, 10).map((sets) => {
             return (
-              <Link to={`/details/${sets.id}`}>
+              <Link to={`/movies/${sets.id}`}>
                 <div
                   data-testid='movie-card'
                   key={sets.id}

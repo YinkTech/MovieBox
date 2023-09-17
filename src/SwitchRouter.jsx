@@ -9,8 +9,8 @@ export const SwitchRouter = () => {
     <>
       <Routes>
         <Route path="/" element={<App />} exact />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/details/:id" element={<Details />} />
+        <Route path="/seemore" element={<Movies />} />
+        <Route path="/movies/:id" element={<Details />} />
       </Routes>
     </>
   );
