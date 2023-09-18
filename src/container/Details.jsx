@@ -160,15 +160,15 @@ export const Details = () => {
                 <div className="lg:flex items-center">
                   <div
                     className="font-semibold text-[#4f4f4f] xl:flex p-0 m-0 items-center "
-                    style={{ whiteSpace: "nowrap" }}
+                    
                   >
                     <div className="flex items-center">
-                      <b data-testid="movie-title block text-[14px]  md:text-[20px]">
+                      <b data-testid=" movie-title block text-[14px]  md:text-[20px]" style={{textAlign: 'start'}}>
                         {details.title}
                       </b>{" "}
                       <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
                     </div>
-                    <div className="flex items-center  text-[10px]  md:text-[14px]">
+                    <div style={{ whiteSpace: "" }} className="flex items-center  text-[10px]  md:text-[14px]">
                       <span data-testid="movie-release-date ">
                         {" "}
                         {formatToUTC(details.release_date)}

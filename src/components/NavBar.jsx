@@ -134,7 +134,7 @@ export const NavBar = () => {
       <div
         className={`${
           isPopupOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        } transform overflow-hidden transition-opacity h-64 text-[#000] transition-scale fixed top-1/4 sm:top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-lg`}
+        } transform overflow-hidden transition-opacity h-64 w-[300px] md:w-[600px] lg:w-[800px] mt-3 sm:mt-0 text-[#000] transition-scale fixed top-[25%] sm:top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-lg`}
         ref={popupRef}
       >
         {/* Render loading and error */}
@@ -146,7 +146,7 @@ export const NavBar = () => {
             aria-haspopup="listbox"
             role="combobox"
             style={{ background: "inherit" }}
-            className=" border  lg:w-[500px] md:w-[460px] sm:w-[180px] w-[100px]"
+            className=" border  lg:w-[700px] md:w-[500px] sm:w-[300px] w-[250px]"
             type="text"
             placeholder="What do you want to watch"
             value={searchQuery}
