@@ -7,8 +7,13 @@ import { Link } from "react-router-dom";
 import logo from "./../assets/images/tv.png";
 import { HiOutlineBars2 } from "react-icons/hi2";
 import Footer from "../components/Footer";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Movies = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   const [like, liked] = useState(false);
   const setLike = () => {
     liked(!like);
@@ -42,8 +47,8 @@ const Movies = () => {
   }, [apiAccess, accessKey]);
 
   return (
-    <div className=" md:container p-1 mx-auto">
-      <div className=" flex justify-between items-center">
+    <div className=" mx-auto">
+      <div className=" flex p-3 bg-[#f8e8eb] justify-between items-center">
         <Link to={`/`} className="flex items-center p-1">
           <img src={logo} style={{ width: "33px" }} alt="logo" />
           <span className="text-black font-semibold mx-2">MovieBox</span>
@@ -61,19 +66,22 @@ const Movies = () => {
           {error}
         </p>
       ) : (
-        <div className="my-6 p-2 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+        <div className="my-6 px-4 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
           {movie.map((sets) => {
             return (
               <Link to={`/movies/${sets.id}`}>
                 <div
-                  data-testid:movie-card
+                  data-aos="fade-up"
+                  data-aos-duration="1000"
+                  data-aos-anchor-placement="top-center"
+                  data-testid="movie-card"
                   key={sets.id}
                   id={sets.id}
                   className="group relative bg-white hover:opacity-80 transition-all"
                   style={{ borderRadius: "5px" }}
                 >
                   <div
-                    data-testid:movie-poster
+                    data-testid="movie-poster"
                     className="aspect-h-1 aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
                     style={{
                       background: `url(https://image.tmdb.org/t/p/original/${sets.poster_path})`,
@@ -102,7 +110,7 @@ const Movies = () => {
                     </div>
                   </div>
                   <span
-                    data-testid:movie-release-date
+                    data-testid="movie-release-date"
                     className="mb-2 font-bold"
                     style={{ color: "#b0b4bf", fontSize: "11px" }}
                   >
@@ -111,7 +119,7 @@ const Movies = () => {
                   <div className="block">
                     <div>
                       <h3 className="my-2 text-sm text-[#111828]">
-                        <b className="text-xl" data-testid:movie-title>
+                        <b className="text-xl" data-testid="movie-title">
                           {sets.original_title}
                         </b>
                       </h3>

@@ -18,7 +18,7 @@ const Header = () => {
     >
       <NavBar />
 
-      <div className="text-white mt-24 md:container mx-auto p-2 md:p-0 flex justify-between items-center">
+      <div className="text-white mt-24 md:container mx-auto p-2 flex justify-between items-center">
         <div className="w-60">
           <h1 className="my-2 text-sm text-[#fff]">
             <b className="md:text-4xl text-xl font-bold">

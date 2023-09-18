@@ -12,8 +12,14 @@ import { Link, useParams } from "react-router-dom";
 import logo from "./../assets/images/tv.png";
 import { HiOutlineBars2 } from "react-icons/hi2";
 import { formatToUTC } from "../utc/UtcFormat";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export const Details = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   const { id } = useParams();
   const [details, setMovies] = useState([]);
   const [videos, setVideos] = useState([]);
@@ -46,17 +52,22 @@ export const Details = () => {
     const getVideos = async () => {
       try {
         if (id !== null) {
-          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessKey}`,
-            },
-          });
+          const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessKey}`,
+              },
+            }
+          );
           const data = await response.json();
-  
+
           // Filter the results to select only videos of a specific type (e.g., trailers)
-          const trailerVideos = data.results.filter(video => video.type === "Trailer");
-  
+          const trailerVideos = data.results.filter(
+            (video) => video.type === "Trailer"
+          );
+
           // Select the first video from the filtered results
           if (trailerVideos.length > 0) {
             setVideos([trailerVideos[0]]);
@@ -70,19 +81,16 @@ export const Details = () => {
         setError("Error getting movie details :(");
       }
     };
-  
+
     getVideos();
   }, [id, accessKey]);
-  
-  
 
   const [showIframe, setShowIframe] = useState(false);
 
-
   return (
     <div className=" md:w-[auto] overflow-hidden">
-      <div className="md:hidden bg-[#555a]">
-        <div className=" flex justify-between items-center">
+      <div className="md:hidden">
+        <div className=" flex bg-[#f8e8eb] justify-between items-center">
           <Link to={`/`} className="flex items-center p-1">
             <img src={logo} style={{ width: "33px" }} alt="logo" />
             <span className="text-black font-semibold mx-2">MovieBox</span>
@@ -103,16 +111,17 @@ export const Details = () => {
       <div className="flex ">
         <SideBar className="flex-1" />
         {Object.keys(details).length === 0 ? (
-          <div className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
+          <div 
+          data-aos="fade-down"
+          data-aos-duration="1000"
+          data-aos-anchor-placement="top-center" className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
             <div className="stage filter-contrast">
               <div class="dot-overtaking"></div>
             </div>
           </div>
         ) : (
           <div className=" p-4 md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
-            
             {showIframe ? (
-              
               <iframe
                 className="details-header  md:h-[450px] h-64"
                 src={`https://www.youtube.com/embed/${videos[0].key}?si=UQNihStM29H5QHzN`}
@@ -176,7 +185,7 @@ export const Details = () => {
                     </div>
                   </div>{" "}
                   <div className="flex justify-between items-center">
-                    <div className="flex py-4 lg:py-0  items-center">
+                    <div className=" md:flex md:py-4 lg:py-0 ">
                       {details.genres.map((genre) => (
                         <span
                           key={genre.id}
@@ -185,7 +194,7 @@ export const Details = () => {
                             borderRadius: "20px",
                             fontSize: "10px",
                           }}
-                          className="mx-2 text-[#ca5555] px-3 py-1 font-bold "
+                          className="mx-2 items-end text-[#ca5555] px-3 py-1 font-bold "
                         >
                           {" "}
                           {genre.name}{" "}
