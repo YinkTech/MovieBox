@@ -16,6 +16,7 @@ import { formatToUTC } from "../utc/UtcFormat";
 export const Details = () => {
   const { id } = useParams();
   const [details, setMovies] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [error, setError] = useState("");
   const apiUrl = import.meta.env.VITE_MOVIE_DETAILS;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
@@ -38,13 +39,45 @@ export const Details = () => {
         setError("Error getting movie details :(");
       }
     };
-
     getMovies();
   }, [id, accessKey, apiUrl]);
 
+  useEffect(() => {
+    const getVideos = async () => {
+      try {
+        if (id !== null) {
+          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessKey}`,
+            },
+          });
+          const data = await response.json();
+  
+          // Filter the results to select only videos of a specific type (e.g., trailers)
+          const trailerVideos = data.results.filter(video => video.type === "Trailer");
+  
+          // Select the first video from the filtered results
+          if (trailerVideos.length > 0) {
+            setVideos([trailerVideos[0]]);
+          } else {
+            // Handle the case where no matching videos were found
+            setVideos([]);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+        setError("Error getting movie details :(");
+      }
+    };
+  
+    getVideos();
+  }, [id, accessKey]);
+  
+  
+
   const [showIframe, setShowIframe] = useState(false);
 
-  console.log(error);
 
   return (
     <div className=" md:w-[auto] overflow-hidden">
@@ -77,11 +110,16 @@ export const Details = () => {
           </div>
         ) : (
           <div className=" p-4 md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
+            
             {showIframe ? (
+              
               <iframe
-                src={details.homepage}
                 className="details-header  md:h-[450px] h-64"
-                title="Iframe Example"
+                src={`https://www.youtube.com/embed/${videos[0].key}?si=UQNihStM29H5QHzN`}
+                title={details.title}
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
               ></iframe>
             ) : (
               <div

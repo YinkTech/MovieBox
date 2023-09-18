@@ -46,7 +46,6 @@ const FeaturedMovies = () => {
     
         <Link
         to='./seemore'
-        to='./seemore'
           className="flex items-center font-bold"
           style={{ color: "#cf4e6c" }}
         >
