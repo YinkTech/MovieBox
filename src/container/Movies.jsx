@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IoChevronForward } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import imob from "./../assets/images/imob.png";
 import tomato from "./../assets/images/tomato.png";
 import { FaHeart } from "react-icons/fa";
@@ -7,13 +7,8 @@ import { Link } from "react-router-dom";
 import logo from "./../assets/images/tv.png";
 import { HiOutlineBars2 } from "react-icons/hi2";
 import Footer from "../components/Footer";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const Movies = () => {
-  useEffect(() => {
-    AOS.init();
-  }, []);
   const [like, liked] = useState(false);
   const setLike = () => {
     liked(!like);
@@ -23,10 +18,12 @@ const Movies = () => {
   const [error, setError] = useState("");
   const apiAccess = import.meta.env.VITE_API_URL_MORE;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
+  const [count, setCount] = useState(1);
+
   useEffect(() => {
     const getTopRated = async () => {
       try {
-        const response = await fetch(`${apiAccess}`, {
+        const response = await fetch(`${apiAccess}${count}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessKey}`,
@@ -42,10 +39,22 @@ const Movies = () => {
       } catch (error) {
         console.error("Error fetching datas:", error);
       }
+      console.log(movie);
     };
     getTopRated();
-  }, [apiAccess, accessKey]);
+  }, [apiAccess, accessKey, count]);
 
+  const increment = () => {
+    if (count < 500) {
+      setCount(count + 1);
+    }
+  };
+
+  const decrement = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
   return (
     <div className=" mx-auto">
       <div className=" flex p-3 bg-[#f8e8eb] justify-between items-center">
@@ -66,103 +75,139 @@ const Movies = () => {
           {error}
         </p>
       ) : (
-        <div className="my-6 px-4 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-          {movie.map((sets) => {
-            return (
-              <Link to={`/movies/${sets.id}`}>
-                <div
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
-                  data-aos-anchor-placement="top-center"
-                  data-testid="movie-card"
-                  key={sets.id}
-                  id={sets.id}
-                  className="group relative bg-white hover:opacity-80 transition-all"
-                  style={{ borderRadius: "5px" }}
+        <div>
+          {Object.keys(movie).length === 0 ? (
+            <div className="mt-10 text-center mx-auto w-[100px] ">
+              <div className="stage filter-contrast">
+                <div className="dot-overtaking"></div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="mx-auto mt-5 flex justify-center items-center gap-5">
+                <button
+                  onClick={decrement}
+                  className=" bg-[#be113c] text-white p-2 px-3 rounded-md shadow-sm hover:opacity-90"
+                  style={{ transition: "0.3s all easein", outline: "none" }}
                 >
-                  <div
-                    data-testid="movie-poster"
-                    className="aspect-h-1 aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
-                    style={{
-                      background: `url(https://image.tmdb.org/t/p/original/${sets.poster_path})`,
-                      backgroundPosition: "center",
-                      backgroundSize: "100% 100%",
-                    }}
-                  >
-                    <div
-                      className="p-2 flex flex-row-reverse cursor-pointer"
-                      style={{ transition: "0.5s all ease-in-out" }}
-                    >
+                  <IoChevronBack />
+                </button>
+                <button
+                  className=" bg-[#be113c] text-white p-2 px-3 rounded-md shadow-sm hover:opacity-90"
+                  style={{ transition: "0.3s all easein", outline: "none" }}
+                >
+                  {count}
+                </button>
+                <button
+                  onClick={increment}
+                  className=" bg-[#be113c] text-white p-2 px-3 rounded-md shadow-sm hover:opacity-90"
+                  style={{ transition: "0.3s all easein", outline: "none" }}
+                >
+                  <IoChevronForward />
+                </button>
+              </div>
+              <div className="my-6 px-4 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+                {movie.map((sets) => {
+                  return (
+                    <Link key={sets.id} to={`/movies/${sets.id}`}>
                       <div
-                        onClick={setLike}
-                        style={{
-                          border: "none",
-                          padding: "5px",
-                          width: "fit-content",
-                          borderRadius: "50%",
-                          background: "#fafafc79",
-                        }}
+                        data-testid="movie-card"
+                        id={sets.id}
+                        className="group relative bg-white hover:opacity-80 transition-all"
+                        style={{ borderRadius: "5px" }}
                       >
-                        <FaHeart
-                          style={{ color: `${like ? "red" : "#d2d5dc"}` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <span
-                    data-testid="movie-release-date"
-                    className="mb-2 font-bold"
-                    style={{ color: "#b0b4bf", fontSize: "11px" }}
-                  >
-                    {sets.release_date}
-                  </span>
-                  <div className="block">
-                    <div>
-                      <h3 className="my-2 text-sm text-[#111828]">
-                        <b className="text-xl" data-testid="movie-title">
-                          {sets.original_title}
-                        </b>
-                      </h3>
-                      <div className="my-2 flex justify-between">
-                        <div className="flex items-center">
-                          <img
-                            src={imob}
-                            alt="imob"
-                            style={{ width: "30px", height: "13px" }}
-                          />
-                          <span
-                            style={{ fontSize: "13px", marginLeft: "10px" }}
-                          >
-                            76.0 / 100
-                          </span>
-                        </div>
-                        <div className="flex items-center">
-                          <img
-                            src={tomato}
-                            alt="tomato"
-                            style={{ width: "18px", height: "13px" }}
-                          />
-                          <span
-                            style={{ fontSize: "13px", marginLeft: "10px" }}
-                          >
-                            {sets.vote_average.toFixed(1)}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between">
-                        <span
-                          className="mt-1 font-semibold block text-[#9ca4af]"
-                          style={{ fontSize: "13px" }}
+                        <div
+                          data-testid="movie-poster"
+                          className="aspect-h-1 aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none cursor-pointer h-96"
+                          style={{
+                            background: `url(https://image.tmdb.org/t/p/original/${sets.poster_path})`,
+                            backgroundPosition: "center",
+                            backgroundSize: "100% 100%",
+                          }}
                         >
-                          Action, Adventure, Thriller
+                          <div
+                            className="p-2 flex flex-row-reverse cursor-pointer"
+                            style={{ transition: "0.5s all ease-in-out" }}
+                          >
+                            <div
+                              onClick={setLike}
+                              style={{
+                                border: "none",
+                                padding: "5px",
+                                width: "fit-content",
+                                borderRadius: "50%",
+                                background: "#fafafc79",
+                              }}
+                            >
+                              <FaHeart
+                                style={{ color: `${like ? "red" : "#d2d5dc"}` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <span
+                          data-testid="movie-release-date"
+                          className="mb-2 font-bold"
+                          style={{ color: "#b0b4bf", fontSize: "11px" }}
+                        >
+                          {sets.release_date}
                         </span>
+                        <div className="block">
+                          <div>
+                            <h3 className="my-2 text-sm text-[#111828]">
+                              <b className="text-xl" data-testid="movie-title">
+                                {sets.original_title}
+                              </b>
+                            </h3>
+                            <div className="my-2 flex justify-between">
+                              <div className="flex items-center">
+                                <img
+                                  src={imob}
+                                  alt="imob"
+                                  style={{ width: "30px", height: "13px" }}
+                                />
+                                <span
+                                  style={{
+                                    fontSize: "13px",
+                                    marginLeft: "10px",
+                                  }}
+                                >
+                                  76.0 / 100
+                                </span>
+                              </div>
+                              <div className="flex items-center">
+                                <img
+                                  src={tomato}
+                                  alt="tomato"
+                                  style={{ width: "18px", height: "13px" }}
+                                />
+                                <span
+                                  style={{
+                                    fontSize: "13px",
+                                    marginLeft: "10px",
+                                  }}
+                                >
+                                  {sets.vote_average.toFixed(1)}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex justify-between">
+                              <span
+                                className="mt-1 font-semibold block text-[#9ca4af]"
+                                style={{ fontSize: "13px" }}
+                              >
+                                Action, Adventure, Thriller
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
       <div className="my-5"></div>

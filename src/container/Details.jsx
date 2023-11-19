@@ -12,20 +12,19 @@ import { Link, useParams } from "react-router-dom";
 import logo from "./../assets/images/tv.png";
 import { HiOutlineBars2 } from "react-icons/hi2";
 import { formatToUTC } from "../utc/UtcFormat";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export const Details = () => {
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   const { id } = useParams();
   const [details, setMovies] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [similar, setSimilar] = useState([]);
+  const [creditsStar, setCreditsStar] = useState([]);
+  const [directors, setDirectors] = useState([]);
+  const [creditsWriters, setCreditsWriters] = useState([]);
   const [error, setError] = useState("");
   const apiUrl = import.meta.env.VITE_MOVIE_DETAILS;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
+  const langUs = '?language=en-US';
 
   useEffect(() => {
     const getMovies = async () => {
@@ -53,7 +52,7 @@ export const Details = () => {
       try {
         if (id !== null) {
           const response = await fetch(
-            `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+            `${apiUrl}${id}/videos${langUs}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -62,17 +61,13 @@ export const Details = () => {
             }
           );
           const data = await response.json();
-
-          // Filter the results to select only videos of a specific type (e.g., trailers)
           const trailerVideos = data.results.filter(
             (video) => video.type === "Trailer"
           );
 
-          // Select the first video from the filtered results
           if (trailerVideos.length > 0) {
             setVideos([trailerVideos[0]]);
           } else {
-            // Handle the case where no matching videos were found
             setVideos([]);
           }
         }
@@ -82,11 +77,66 @@ export const Details = () => {
       }
     };
 
+    const getSimilarMovies = async () => {
+      try {
+        if (id !== null) {
+          const response = await fetch(
+            `${apiUrl}${id}/similar${langUs}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessKey}`,
+              },
+            }
+          );
+
+          const data = await response.json();
+          const movieSilimarSlice = data.results.slice(0, 3);
+          if (movieSilimarSlice.length > 0) {
+            const setunknownSimilar = [movieSilimarSlice];
+            setSimilar(setunknownSimilar[0]);
+          } else {
+            setSimilar([]);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+        setError("Error getting movie details :(");
+      }
+    };
+
+    const getCreditsMovies = async () => {
+      try {
+        if (id !== null) {
+          const response = await fetch(
+            `${apiUrl}${id}/credits${langUs}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessKey}`,
+              },
+            }
+          );
+
+          const data = await response.json();
+          setDirectors(data.crew.filter((person) => person.job === "Director"));
+          setCreditsWriters(
+            data.crew.filter((person) => person.department === "Writing")
+          );
+          setCreditsStar(data.cast.slice(0, 3));
+        }
+      } catch (err) {
+        console.log(err);
+        setError("Error getting movie details :(");
+      }
+    };
+
     getVideos();
+    getSimilarMovies();
+    getCreditsMovies();
   }, [id, accessKey]);
 
   const [showIframe, setShowIframe] = useState(false);
-
   return (
     <div className=" md:w-[auto] overflow-hidden">
       <div className="md:hidden">
@@ -111,12 +161,11 @@ export const Details = () => {
       <div className="flex ">
         <SideBar className="flex-1" />
         {Object.keys(details).length === 0 ? (
-          <div 
-          data-aos="fade-down"
-          data-aos-duration="1000"
-          data-aos-anchor-placement="top-center" className=" mt-72  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
-            <div className="stage filter-contrast">
-              <div class="dot-overtaking"></div>
+          <div className=" m-auto  md:ms-[200px] ms-[0]" style={{ flex: "2" }}>
+            <div className=" w-fit mx-auto h-full flex flex-col mt-[50%] sm:mt-[20%] md:mt-[25%]">
+              <div className="stage w-[200px] mx-auto filter-contrast">
+                <div className="dot-overtaking"></div>
+              </div>
             </div>
           </div>
         ) : (
@@ -158,17 +207,20 @@ export const Details = () => {
             <div className="my-5 md:mx-3">
               <div className="flex text-center mx-auto items-center justify-between">
                 <div className="lg:flex items-center">
-                  <div
-                    className="font-semibold text-[#4f4f4f] xl:flex p-0 m-0 items-center "
-                    
-                  >
+                  <div className="font-semibold text-[#4f4f4f] xl:flex p-0 m-0 items-center ">
                     <div className="flex items-center">
-                      <b data-testid=" movie-title block text-[14px]  md:text-[20px]" style={{textAlign: 'start'}}>
+                      <b
+                        data-testid=" movie-title block text-[14px]  md:text-[20px]"
+                        style={{ textAlign: "start" }}
+                      >
                         {details.title}
                       </b>{" "}
                       <BsDot className="mx-1 text-[#3f3f3f]" />{" "}
                     </div>
-                    <div style={{ whiteSpace: "" }} className="flex items-center  text-[10px]  md:text-[14px]">
+                    <div
+                      style={{ whiteSpace: "" }}
+                      className="flex items-center  text-[10px]  md:text-[14px]"
+                    >
                       <span data-testid="movie-release-date ">
                         {" "}
                         {formatToUTC(details.release_date)}
@@ -249,28 +301,53 @@ export const Details = () => {
                       style={{ whiteSpace: "nowrap" }}
                     >
                       <label> Directors : </label>
-                      <span className="text-[#c11f46] font-semibold mx-2">
-                        Joseph
-                      </span>
+                      {directors.map((credit) => {
+                        return (
+                          <span
+                            key={credit.id}
+                            className="text-[#c11f46] font-semibold mx-2"
+                          >
+                            {credit.name}
+                          </span>
+                        );
+                      })}
                     </div>
                     <div className="flex items-center my-3">
                       <label style={{ whiteSpace: "nowrap" }}>
                         {" "}
                         Writers :{" "}
                       </label>
-                      <span className="text-[#c11f46] font-semibold mx-2">
-                        Jim Cash, Jack Epps Jr, Peter Craig
-                      </span>
+                      {creditsWriters.slice(0, 3).map((credit) => {
+                        return (
+                          <span
+                            key={credit.id}
+                            className="text-[#c11f46] font-semibold mx-2"
+                          >
+                            {credit.name}
+                          </span>
+                        );
+                      })}
                     </div>
                     <div className="flex items-center my-3">
                       <label style={{ whiteSpace: "nowrap" }}> Stars : </label>
-                      <span className="text-[#c11f46] font-semibold mx-2">
-                        Tom Cruise, Jennifer Connelly, Miles Teller
-                      </span>
+
+                      {creditsStar.map((credit) => {
+                        return (
+                          <span
+                            key={credit.id}
+                            className="text-[#c11f46] font-semibold mx-2"
+                          >
+                            {credit.name}
+                          </span>
+                        );
+                      })}
                     </div>
                     <div
                       className="flex items-center justify-between"
-                      style={{ border: "1px solid #555", borderRadius: "10px" }}
+                      style={{
+                        border: "1px solid #555",
+                        borderRadius: "10px",
+                      }}
                     >
                       <div
                         className="flex items-center"
@@ -296,7 +373,7 @@ export const Details = () => {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div style={{ flex: "1" }}>
                   <div>
                     <div className="flex items-center justify-center bg-[#be113c] text-[#fff] p-2 rounded-lg font-semibold mt-5 lg-mt-5">
                       {" "}
@@ -312,12 +389,32 @@ export const Details = () => {
                     </div>
                     <div
                       style={{
-                        background: `url(${Rectangle})`,
                         backgroundPosition: Center,
                         backgroundSize: "100% 100%",
                       }}
-                      className=" pt-52 lg:pt-40 mt-9 lg:mt-5"
+                      className=" mt-9 lg:mt-5"
                     >
+                      <div
+                        style={{ borderRadius: "20px" }}
+                        className="grid gap-2 grid-cols-3"
+                      >
+                        {similar.map((simila) => {
+                          return (
+                            <Link
+                              key={simila.id}
+                              target="_blank"
+                              to={`/movies/${simila.id}`}
+                            >
+                              <img
+                                className="h-[200px] w-full"
+                                loading="lazy"
+                                src={`https://image.tmdb.org/t/p/original/${simila.poster_path}`}
+                                alt={simila.original_title}
+                              />
+                            </Link>
+                          );
+                        })}
+                      </div>
                       <div
                         style={{
                           whiteSpace: "nowrap",

@@ -5,6 +5,7 @@ import tomato from "./../assets/images/tomato.png";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { formatToUTC } from "../utc/UtcFormat";
+import { easeInOut } from "framer-motion";
 
 const FeaturedMovies = () => {
   const [like, liked] = useState(false);
@@ -55,15 +56,25 @@ const FeaturedMovies = () => {
           <IoChevronForward className="p-0 mt-1 m-0" />
         </Link>
       </div>
+      
       {error ? (
         <p className="text-buttonred text-2xl max-[280]:text-base md:text-[36px]">
           {error}
         </p>
       ) : (
+        <div>
+            {Object.keys(movie).length === 0 ? (
+          <div className="mt-10 text-center mx-auto  w-full ">
+            <div className="stage filter-contrast">
+              <div className="dot-overtaking"></div>
+            </div>
+          </div>
+        ) : ( 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-          {movie.slice(0, 10).map((sets) => {
+         
+         { movie.slice(0, 10).map((sets) => {
             return (
-              <Link to={`/movies/${sets.id}`}>
+              <Link key={sets.id} to={`/movies/${sets.id}`}>
                 <div
                   data-testid='movie-card'
                   key={sets.id}
@@ -155,7 +166,12 @@ const FeaturedMovies = () => {
             );
           })}
         </div>
+          )}
+          </div>
       )}
+          <Link to='./seemore'>
+           <button className="mt-10 mx-auto block bg-[#be113c] text-white p-2 px-3 rounded-md shadow-sm hover:opacity-90" style={{transition: '0.3s all easein'}}>View More</button>
+          </Link>
     </div>
   );
 };
