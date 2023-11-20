@@ -10,8 +10,9 @@ import Footer from "../components/Footer";
 
 const Movies = () => {
   const [like, liked] = useState(false);
-  const setLike = () => {
+  const setLike = (event) => {
     liked(!like);
+    event.stopPropagation();
   };
 
   const [movie, setMovie] = useState([]);
@@ -39,7 +40,6 @@ const Movies = () => {
       } catch (error) {
         console.error("Error fetching datas:", error);
       }
-      console.log(movie);
     };
     getTopRated();
   }, [apiAccess, accessKey, count]);

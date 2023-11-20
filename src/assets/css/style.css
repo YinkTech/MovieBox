@@ -7,11 +7,12 @@ input:focus {
   outline: none;
 }
 
-.featuredCard:hover {
+.featuredCard {
+  
   transition: .2s all ease-in-out;
 }
 .featuredCard:hover {
-  transform: scale(1.1);
+  transform: scale(1.02);
 }
 
 .details-header {

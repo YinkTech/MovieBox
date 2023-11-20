@@ -9,8 +9,9 @@ import { easeInOut } from "framer-motion";
 
 const FeaturedMovies = () => {
   const [like, liked] = useState(false);
-  const setLike = () => {
+  const setLike = (e) => {
     liked(!like);
+    e.stopPropagation();
   };
 
   const [movie, setMovie] = useState([]);
@@ -39,6 +40,13 @@ const FeaturedMovies = () => {
     };
     getTopRated();
   }, [apiAccess, accessKey]);
+
+  const shortenText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.slice(0, maxLength)}...`;
+    }
+    return text;
+  };
 
   return (
     <div className=" my-8 md:container p-6 md:p-6 py-5 mx-auto">
@@ -79,7 +87,7 @@ const FeaturedMovies = () => {
                   data-testid='movie-card'
                   key={sets.id}
                   id={sets.id}
-                  className="group relative bg-white featuredCard"
+                  className="group border-2 hover:shadow-xl relative bg-white featuredCard"
                   style={{ borderRadius: "5px" }}
                 >
                   <div
@@ -113,16 +121,16 @@ const FeaturedMovies = () => {
                   </div>
                   <span
                     data-testid="movie-release-date"
-                    className="mb-2 font-bold"
+                    className=" p-2 mb-2 font-bold"
                     style={{ color: "#b0b4bf", fontSize: "11px" }}
                   >
                     {formatToUTC(sets.release_date)}
                   </span>
                   <div className="block">
-                    <div>
+                    <div className=" p-2">
                       <h3 className="my-2 text-sm text-[#111828]">
                         <b className="text-xl" data-testid="movie-title">
-                          {sets.original_title}
+                          {shortenText(sets.original_title, 21)}
                         </b>
                       </h3>
                       <div className="my-2 flex justify-between">

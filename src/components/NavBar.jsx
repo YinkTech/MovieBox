@@ -95,7 +95,7 @@ export const NavBar = () => {
   }, []);
 
   return (
-    <div className="bg-[inherit]">
+    <div className="bg-[inherit] pt-5">
       <Box className="md:container flex justify-between mx-auto p-1 items-center">
         {/* Logo and brand */}
         <div className="flex items-center p-1">
@@ -106,7 +106,7 @@ export const NavBar = () => {
         <div
           onClick={togglePopup}
           className="hidden md:flex items-center cursor-pointer text-white p-3 h-[40px]"
-          style={{ border: "3px solid #fff", borderRadius: "10px" }}
+          style={{ border: "1px solid #fff", borderRadius: "10px" }}
         >
           <span
             style={{ background: "inherit" }}

@@ -24,7 +24,7 @@ export const Details = () => {
   const [error, setError] = useState("");
   const apiUrl = import.meta.env.VITE_MOVIE_DETAILS;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
-  const langUs = '?language=en-US';
+  const langUs = "?language=en-US";
 
   useEffect(() => {
     const getMovies = async () => {
@@ -51,15 +51,12 @@ export const Details = () => {
     const getVideos = async () => {
       try {
         if (id !== null) {
-          const response = await fetch(
-            `${apiUrl}${id}/videos${langUs}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessKey}`,
-              },
-            }
-          );
+          const response = await fetch(`${apiUrl}${id}/videos${langUs}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessKey}`,
+            },
+          });
           const data = await response.json();
           const trailerVideos = data.results.filter(
             (video) => video.type === "Trailer"
@@ -80,15 +77,12 @@ export const Details = () => {
     const getSimilarMovies = async () => {
       try {
         if (id !== null) {
-          const response = await fetch(
-            `${apiUrl}${id}/similar${langUs}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessKey}`,
-              },
-            }
-          );
+          const response = await fetch(`${apiUrl}${id}/similar${langUs}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessKey}`,
+            },
+          });
 
           const data = await response.json();
           const movieSilimarSlice = data.results.slice(0, 3);
@@ -108,15 +102,12 @@ export const Details = () => {
     const getCreditsMovies = async () => {
       try {
         if (id !== null) {
-          const response = await fetch(
-            `${apiUrl}${id}/credits${langUs}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessKey}`,
-              },
-            }
-          );
+          const response = await fetch(`${apiUrl}${id}/credits${langUs}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessKey}`,
+            },
+          });
 
           const data = await response.json();
           setDirectors(data.crew.filter((person) => person.job === "Director"));
@@ -379,14 +370,15 @@ export const Details = () => {
                       {" "}
                       <img src={tag} alt="tag" className="mx-2" /> See Showtimes{" "}
                     </div>
+                    <Link to={`/seemore`}>
                     <div
                       className="flex items-center justify-center bg-[#f8e8eb] text-[#000] p-2 rounded-lg font-semibold my-3"
                       style={{ border: "1px solid #be113c" }}
                     >
                       {" "}
-                      <img src={list} alt="tag" className="mx-2" /> More Watch
-                      options{" "}
-                    </div>
+                      <img src={list} alt="tag" className="mx-2" /> 
+                      More Watch options{" "}
+                    </div></Link>
                     <div
                       style={{
                         backgroundPosition: Center,
@@ -415,16 +407,18 @@ export const Details = () => {
                           );
                         })}
                       </div>
-                      <div
-                        style={{
-                          whiteSpace: "nowrap",
-                          borderRadius: "10px 10px 0px 0px",
-                        }}
-                        className="flex items-center justify-center bg-[#000000ba] text-[#fff] text-[13px] p-2"
-                      >
-                        <img src={list2} alt="list2" className="mx-2" />
-                        The Best Movies and Shows in September
-                      </div>
+                      <Link to={`/seemore`}>
+                        <div
+                          style={{
+                            whiteSpace: "nowrap",
+                            borderRadius: "10px 10px 0px 0px",
+                          }}
+                          className="flex items-center justify-center bg-[#000000ba] text-[#fff] text-[13px] p-2"
+                        >
+                          <img src={list2} alt="list2" className="mx-2" />
+                          The Best Movies and Shows in September
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
