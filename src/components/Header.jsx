@@ -40,7 +40,7 @@ const Header = () => {
     const moveToNextItem = () => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     };
-    const interval = setInterval(moveToNextItem, 5000);
+    const interval = setInterval(moveToNextItem, 7000);
     return () => clearInterval(interval);
   }, [images]);
 
