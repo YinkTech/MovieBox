@@ -183,7 +183,7 @@ const Movies = () => {
                               <span
                                 style={{ fontSize: "13px", marginLeft: "10px" }}
                               >
-                                {sets.vote_average.toFixed(1)} / 100
+                                {sets.vote_average.toFixed(1)} / 10
                               </span>
                             </div>
                             <div className="flex items-center">
@@ -195,7 +195,7 @@ const Movies = () => {
                               <span
                                 style={{ fontSize: "13px", marginLeft: "10px" }}
                               >
-                                {sets.vote_average.toFixed(1)}
+                                {(sets.vote_average*10).toFixed()}
                               </span>
                             </div>
                           </div>

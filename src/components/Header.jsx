@@ -3,6 +3,7 @@ import { NavBar } from "./NavBar";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import imob from "./../assets/images/imob.png";
 import tomato from "./../assets/images/tomato.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [error, setError] = useState("");
@@ -11,7 +12,7 @@ const Header = () => {
   const apiAccess = import.meta.env.VITE_API_URL_MORE;
   const accessKey = import.meta.env.VITE_ACCESS_TOKEN;
   const imageUrl = "https://image.tmdb.org/t/p/original/";
-
+  const navigate = useNavigate();
   useEffect(() => {
     const getTopRated = async () => {
       try {
@@ -89,7 +90,7 @@ const Header = () => {
                     style={{ width: "30px", height: "13px" }}
                   />
                   <span style={{ fontSize: "13px", marginLeft: "10px" }}>
-                    76.0 / 100
+                    {images[currentIndex].vote_average.toFixed(1)} / 10
                   </span>
                 </div>
                 <div className="flex ms-4 items-center">
@@ -99,7 +100,7 @@ const Header = () => {
                     style={{ width: "18px", height: "13px" }}
                   />
                   <span style={{ fontSize: "13px", marginLeft: "10px" }}>
-                    68%
+                  {(images[currentIndex].vote_average*10).toFixed()}%
                   </span>
                 </div>
               </div>
@@ -107,7 +108,7 @@ const Header = () => {
                 <p className="font-semibold" style={{ fontSize: "11px" }}>
                   {shortenText(images[currentIndex].overview, 240)}
                 </p>
-                <button className="my-9 flex items-center p-1 rounded px-3 bg-[#be113c]">
+                <button onClick={() => navigate(`/movies/${images[currentIndex].id}`)} className="my-9 flex items-center p-1 rounded px-3 bg-[#be113c]">
                   <BsFillPlayCircleFill className="me-3" />{" "}
                   <span style={{ fontSize: "13px" }}>WATCH TRAILER</span>
                 </button>
